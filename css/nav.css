@@ -1,0 +1,17 @@
+@font-face{
+  
+    font-family: 'memfis';
+    src: url(../fonts/MangabeyRegular-rgqVO.otf);
+  }
+  
+  .navbar{
+    font-family: 'memfis';
+    font-size:x-large;
+  background-color:var(--bs-1);
+  color:white;
+  margin-bottom: 10px;
+  }
+  body{
+    background-color:var(--bs-5);
+  }
+  
