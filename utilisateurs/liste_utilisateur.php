@@ -11,7 +11,7 @@
 <body>
   <div class="main-content">
     <!--    naavbar--><link rel="stylesheet" href="../css/nav.css">
-<?php  include '../nav.php'?>
+  <?php  include '../nav.php'?>
     <!----->
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(https://www.usnews.com/dims4/USNEWS/0db25a9/2147483647/crop/2119x1413+1+0/resize/970x647/quality/85/?url=https%3A%2F%2Fwww.usnews.com%2Fcmsmedia%2F23%2F02%2Fa1a88058409d8bc02755e6ae8bfa%2F200825-studyingbook-stock.jpg); background-size: cover; background-position: center top;">
       <!-- Mask -->
@@ -23,7 +23,7 @@
             <h1 class="display-2 text-white">Hello admin </h1>
             <p class="text-white mt-0 mb-5">you can add or change the marks of any of your student down below</p>
             
-            <a href="add_student.html" class="btn btn-info">Ajouter utilisateur</a>
+            <a href="ajouter_utilisateur.php" class="btn btn-info">Ajouter utilisateur</a>
           </div>
         </div>
       </div>

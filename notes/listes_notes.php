@@ -45,7 +45,7 @@
         echo '<tr>';
    
         echo '<td>'.$row['id_note'].'</td>';
-        echo'<td>'.$row['nom'].$row['prenom'].'</td>';
+        echo'<td>'.$row['nom']." ".$row['prenom'].'</td>';
         echo '<td>'.$row['matricule'].'</td>';
         echo'<td>'.$row['nom_examen'].'</td>';
         echo'<td>'.$row['nom_cours'].'</td>';
