@@ -44,9 +44,10 @@
         echo '<td>'.$row['nom_cours'].'</td>';
         echo'<td>'.$row['nom_examen'].'</td>';
         echo'<td>'.$row['nom']." ".$row['prenom'].'</td>';
-        
-  
-        
+        ?>
+  <td>
+    <a class="btn btn-sm btn-primary" href="../notes/ajouter_note.php?id=<?=$row['id_examen']?>">ajouter notes</a></td>
+        <?php
         echo'</tr>';
      }
      

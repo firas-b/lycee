@@ -19,6 +19,7 @@
   <div class="row justify-content-center">
 <?php  require '../config.php' ?>
 <div class="row w-75 ">
+    <form method ="POST"> 
 <input style="width:110px;"  type="submit" name="submit" class="btn btn-primary  " value="Enregistrer"></div>
 
 <table class=" table-sm  w-75 justify-content" style=" overflow:scroll;">
@@ -34,9 +35,9 @@
       <th scope="col"> noter</th>
     </tr>
   </thead>
-  <form  action=""  method="POST" >
+  
   <tbody class="table-group-divider">
-  <input type ="number" style="width:100px;" name="note">
+  
  <?php
  
  try {
@@ -53,7 +54,7 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <td><?=$contact['prenom']?></td>
         <td><?=$contact['cin']?></td>
         <td><?=$contact['num_tel']?></td>
-        <td></td>
+        <td><input type ="number" style="width:100px;" name="<?php  echo $contact['id_utilisateur']?>"></td>
        
     </tr>
     <?php endforeach; 
@@ -69,7 +70,17 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "<br> Probleme de requete".$e->getMessage();
 }
  //insertion de note 
-if (isset($_POST['submit'])){echo $_POST['note'];}
+if (isset($_POST['submit'])){
+
+    foreach ($contacts as $contact):
+        $id =$contact['id_utilisateur'];
+        $note =$_POST[$id];
+        $query ="INSERT INTO notes  VALUES(NULL,'2','$id','$note')";
+        $db->exec($query);
+        
+    endforeach;
+
+}
  
   
 
