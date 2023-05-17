@@ -4,14 +4,19 @@
     src: url(../fonts/MangabeyRegular-rgqVO.otf);
   }
   
-  .navbar{
+  nav{
     font-family: 'memfis';
-    font-size:x-large;
-  background-color:var(--bs-1);
-  color:white;
-  margin-bottom: 10px;
+  font-size:25px;
+
+    
+    text-color:white;
+
+  
+  background: linear-gradient(87deg, #183058 0, #1a174d 100%) !important;
   }
   body{
     background-color:var(--bs-5);
   }
-  
+  .nav-link{
+    color:white;
+  }
