@@ -22,36 +22,44 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">cours</th>
+      
+      <th scope="col">eleve</th>
+
+      <th scope="col">matricule</th>
       <th scope="col">examen</th>
-           <th>note</th>
-      <th scope="col"> action</th>
+      <th scope="col"> cours</th>
+      <th scope="col"> note</th>
+      
     </tr>
   </thead>
   <tbody class="table-group-divider">
+  
  <?php
- session_start();  
- $id = $_SESSION["id_utilisateur"];
- try {
-    
-    $sql = "SELECT id_examen,nom_cours, nom_examen,note from examen join cours on examen.cours=cours.id_cours where eleve=$id";
 
-    $result = $db->query($sql);
+ try {
+  
+  $query="SELECT id_note,nom,prenom , matricule,nom_examen ,nom_cours , note FROM notes join examen on notes.examen=examen.id_examen join eleve on notes.eleve =eleve.utilisateur join utilisateur on eleve.utilisateur=utilisateur.id_utilisateur join cours on examen.cours=cours.id_cours";
+    $result = $db->query($query);
 
      while($row =$result->fetch(PDO::FETCH_ASSOC)){
         echo '<tr>';
-        echo'<td>'.$row['id_examen'].'</td>';
-        echo '<td>'.$row['nom_cours'].'</td>';
+   
+        echo '<td>'.$row['id_note'].'</td>';
+        echo'<td>'.$row['nom'].$row['prenom'].'</td>';
+        echo '<td>'.$row['matricule'].'</td>';
         echo'<td>'.$row['nom_examen'].'</td>';
+        echo'<td>'.$row['nom_cours'].'</td>';
         echo'<td>'.$row['note'].'</td>';
-  
-        
-        echo'</tr>';
+
+        ?>
+       
+     </tr>
+        <?php
      }
      
 echo'</tbody>
 </table>';
-     
+    
     }
     catch(PDOException $e)
 {

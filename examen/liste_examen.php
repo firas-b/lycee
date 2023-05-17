@@ -22,41 +22,37 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      
-      <th scope="col">nom</th>
-      <th scope="col">prenom</th>
-      <th scope="col">cin</th>
-      <th scope="col"> num-tel</th>
-      <th scope="col"> role</th>
+      <th scope="col">cours</th>
+      <th scope="col">examen</th>
+      <th scope="col">enseignant</th>
+           
       <th scope="col"> action</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
-  
  <?php
-
+ session_start();  
+ $id = $_SESSION["id_utilisateur"];
  try {
-    $query="select * from utilisateur  ";
-    $result = $db->query($query);
+  $sql = "SELECT u.nom,u.prenom, id_examen,nom_cours, nom_examen  from examen join cours on examen.cours=cours.id_cours join enseignant on cours.enseignant = enseignant.utilisateur join utilisateur u on enseignant.utilisateur = u.id_utilisateur;";
+
+    $result = $db->query($sql);
 
      while($row =$result->fetch(PDO::FETCH_ASSOC)){
         echo '<tr>';
-        echo '<th scope="row">'.$row["id_utilisateur"].'</th>';
-        echo'<td>'.$row['nom'].'</td>';
-        echo'<td>'.$row['prenom'].'</td>';
-        echo '<td>'.$row['cin'].'</td>';
-        echo'<td>'.$row['num_tel'].'</td>';
-        echo'<td>'.$row['role'].'</td>';
-
-        ?>
-        <td><a class="btn btn-sm btn-primary" href="update_utilisateur.php?id=<?=$row['id_utilisateur']?>&role=<?=$row['role']?>">Edit</a>
-  <a href="removeEmployee.php?id=<?= $row['id_utilisateur'] ?>">Delete</a></td>
-        <?php
+        echo'<td>'.$row['id_examen'].'</td>';
+        echo '<td>'.$row['nom_cours'].'</td>';
+        echo'<td>'.$row['nom_examen'].'</td>';
+        echo'<td>'.$row['nom']." ".$row['prenom'].'</td>';
+        
+  
+        
+        echo'</tr>';
      }
      
 echo'</tbody>
 </table>';
-     $conn = null;
+     
     }
     catch(PDOException $e)
 {

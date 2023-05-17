@@ -1,33 +1,41 @@
 <?php
-include 'functions.php';
-$pdo = pdo_connect_mysql();
+include '../config.php';
+
 $msg = '';
 // Check if the contact id exists, for example update.php?id=1 will get the contact with the id of 1
-if (isset($_GET['id']) && isset($_GET['role'])) {
-    if (!empty($_POST)) {
+if (isset($_GET['id']) &&isset($_GET['role']) ) {
+    $role=$_GET['role'];
+    $id=$_GET['id'];
+    if (!empty($_POST)&& isset($_POST['submit'])) {
         // This part is similar to the create.php, but instead we update a record and not insert
-        $id = isset($_POST['id']) ? $_POST['id'] : NULL;
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
-        $email = isset($_POST['email']) ? $_POST['email'] : '';
-        $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
-        $title = isset($_POST['title']) ? $_POST['title'] : '';
-        $created = isset($_POST['created']) ? $_POST['created'] : date('Y-m-d H:i:s');
+        
+        $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
+        $prenom = isset($_POST['prenom']) ? $_POST['prenom'] : '';
+        $phone = isset($_POST['cin']) ? $_POST['cin'] : '';
+        $num_tel= isset($_POST['num_tel']) ? $_POST['num_tel'] : '';
+        $matricule = isset($_POST['matricule']) ? $_POST['matricule'] : '';
+        $cin=isset($_POST['cin']) ? $_POST['cin'] : '';
+       $email=isset($_POST['mail']) ? $_POST['mail'] : '';
         // Update the record
-        $stmt = $pdo->prepare('UPDATE utilisateur SET nom = ?, prenom = ?, cin = ?, num_tel = ? WHERE id = ?');
-        $stmt1=$pdo->prepare('UPDATE enseignant  SET , prenom = ?, cin = ?, num_tel = ? WHERE id = ?');
-        $stmt->execute([$id, $name, $email, $phone, $title, $created, $_GET['id']]);
-        $msg = 'Updated Successfully!';
+        $stmt = $db->prepare('UPDATE utilisateur SET   prenom = ? ,nom = ?, cin = ?, num_tel = ? WHERE id_utilisateur = ? ');
+        $stmt->execute([$prenom,$nom,$cin,$num_tel,$id]);
+        if ($role == 'enseignant')
+        { $db->exec("UPDATE enseignant SET matricule = '$matricule', email='$email' where utilisateur ='$id'");}
+      else{ $db->exec("UPDATE eleve  SET matricule= '$matricule' where utilisateur ='$id' ") ;} 
+        
+        header( 'location:liste_utilisateur.php');
     }
     // Get the contact from the contacts table
-    
-    $stmt = $pdo->prepare("SELECT * from  utilisateur   join  on utilisateur.id_utilisateur=${role}.utilisateur WHERE id = ? ");
-    $stmt->execute([$_GET['id']]);
-    $resultt = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$result) {
+   
+    $stmt = $db->prepare("SELECT  * from  utilisateur   join  ${role} on utilisateur.id_utilisateur=${role}.utilisateur WHERE id_utilisateur = $id ");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+   
+    if (!$result) { 
         exit('Contact doesn\'t exist with that ID!');
     }
 } else {
-    exit('No ID specified!');
+    exit($_GET['role']);
 }
 ?>
 <head>
@@ -59,14 +67,14 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
    .
 <div class="wrapper rounded bg-white ">
 
-    <div class="h3">Registration Form</div>
+    <div class="h3">editer utilsateur </div>
 
     <div class="form">
         <form  action="" method="POST">
         <div class="row">
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>prenom</label>
-                <input type="text" class="form-control" name="prenom" value= <?php echo $result['prenom'] ?>required>
+                <input type="text" class="form-control" name="prenom" value= "<?php echo $result['prenom'] ?>"required>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>nom</label>
@@ -76,35 +84,33 @@ if (isset($_GET['id']) && isset($_GET['role'])) {
         <div class="row">
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>cin</label>
-                <input type="text" value= <?php echo $result['cin'] ?> name ="cin"class="form-control" required>
+                <input type="text" value= "<?php echo $result['cin'] ?>" name ="cin"class="form-control" required>
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>role</label>
-                <div class="d-flex align-items-center mt-2">
-                    <label class="option">
-                        <input type="radio" name="radio">eleve
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="option ms-4">
-                        <input type="radio" name="radio">enseignant
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
+                <select class="form-select" name = "role" aria-label="Default select example">
+                <option selected disabled>choisir le role</option>
+                <option value="eleve">eleve</option>
+                <option value="enseignant">enseignant</option>
+                
+                    </select>
             </div>
         </div>
         <div class="row">
+            <?php if ($role=='enseignant'){?>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>Email</label>
-                <input type="email"  name="mail" value= <?php echo $result['email'] ?>class="form-control" required>
+                <input type="email"  name="mail" value= "<?php echo $result['email'] ?>"class="form-control" >
             </div>
+            <?php }?>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>num_tel</label>
-                <input type="tel" name="num_tel" value= <?php echo $result['num_tel'] ?> class="form-control" required>
+                <input type="tel" name="num_tel" value= "<?php echo $result['num_tel'] ?> "class="form-control" required>
             </div>
         </div>
         <div class=" my-md-2 my-3">
             <label>matricule</label>
-            <input type="text" name="matricule" value= <?php echo $result['mtricule_'] ?>  class="form-control" required>
+            <input type="text" name="matricule" value=" <?php echo $result['matricule'] ?>" class="form-control" required>
         </div>
         <input type="submit" name="submit" class="btn btn-primary" value="Enregistrer">
 </form>

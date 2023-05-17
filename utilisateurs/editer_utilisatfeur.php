@@ -3,22 +3,22 @@ require_once'../config.php';
 include ('../passwd.php');
 if (isset($_POST['submit'])){
 try {
-    
+
  $prenom=$_POST['prenom'];
  $nom=$_POST['nom'];
  $cin=$_POST['cin'];
  $num_tel=$_POST['num_tel'];
  $email=$_POST['mail'];
- $role =$_POST['radio'];
+ $role =$_POST['role'];
  $matricule=$_POST['matricule'];
   $mdp=generateStrongPassword($length = 9, $add_dashes = false, $available_sets = 'luds');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "INSERT INTO utilisateur values   (null,'$prenom','$nom','$cin','$num_tel','$mdp')";
+  $sql = "INSERT INTO utilisateur values   (null,'$prenom','$nom','$cin','$num_tel','$role','$mdp')";
    $db->exec($sql);
   $last_id = $db->lastInsertId();
-  if($role =="eleve"){$sql2 ="INSERT eleve values('$last_id','$matricule')";}
+  if($role == "eleve"){$sql2 ="INSERT into  ${role}  values('$last_id','$matricule')";}
   else 
-  $sql2 ="INSERT into enseignant values('$last_id','$matricule','$email')";
+  $sql2 ="INSERT into ${role} values('$last_id','$matricule','$email')";
   $db->exec($sql2) ;
 } catch(PDOException $e) {
   echo $sql . "<br>" . $e->getMessage();
@@ -79,16 +79,12 @@ try {
             </div>
             <div class="col-md-6 mt-md-0 mt-3">
                 <label>role</label>
-                <div class="d-flex align-items-center mt-2">
-                    <label class="option">
-                        <input type="radio" name="radio">eleve
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="option ms-4">
-                        <input type="radio" name="radio">enseignant
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
+                <select class="form-select" name = "role" aria-label="Default select example">
+  <option selected disabled>choisir le role</option>
+  <option value="eleve">eleve</option>
+  <option value="enseignant">enseignant</option>
+  
+</select>
             </div>
         </div>
         <div class="row">
