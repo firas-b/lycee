@@ -3,16 +3,17 @@ require_once("../config.php");
 
       if(isset($_GET["id"]))
       {
-        require_once("connect.inc.php");
-        $id = $_GET["id"];
-        // Connexion a la base de donnees
         
-try { 
-  $req="delete from utilisateur where id_utilisateur = $id"
+        $id = $_GET["id"];
+        $req="delete from cours where id_cours=$id";
+        
+try {
     $n = $db->exec($req);
     if($n>0) {
-        echo "Suppression effectuee avec succes... :)";
-        header('location:liste_utilisateur.php');
+        echo '<script type="text/javascript">
+        alert("succés  !");
+        window.location.href = "liste_cours.php";
+    </script>';
     }
 }
 catch(PDOException $e)
