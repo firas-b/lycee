@@ -71,7 +71,7 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
  //insertion de note 
 if (isset($_POST['submit'])){
-   $examen=$_GET['id_examen'];
+   $examen=$_GET['id'];
     foreach ($contacts as $contact):
         $id =$contact['id_utilisateur'];
         $note =$_POST[$id];

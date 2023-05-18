@@ -25,7 +25,7 @@ if ($_SESSION['role']!= 'admin') { header('Location: ../login.php'); }
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello admin </h1>
+            <h1 class="display-2 text-white">Bonjour admin </h1>
 
             <a href="ajouter_utilisateur.php" class="btn btn-info">Ajouter utilisateur</a>
           </div>
@@ -67,7 +67,7 @@ if ($_SESSION['role']!= 'admin') { header('Location: ../login.php'); }
                <?php
               
                try {
-                  $query="select * from utilisateur where  role != 'admin'  ";
+                  $query="select * from utilisateur where  role != 'admin' order by role  ";
                   $result = $db->query($query);
               
                    while($row =$result->fetch(PDO::FETCH_ASSOC)){

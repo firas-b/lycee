@@ -10,16 +10,18 @@ try {
     if (isset($_POST['submit'])) {
         $cours= $_POST['cours'];
         $nomexamen=$_POST['nomexamen'];
-        $date = date_format($_POST['date'],"d/m/y");
+     
+        $date = $_POST['date'];
        
         $stmt = $db->prepare("INSERT INTO examen  (nom_examen, cours, date ) VALUES (:nomexamen, :cours , :date)");
 
         $stmt->bindValue(':nomexamen', $nomexamen);
         $stmt->bindValue(':cours', $cours);
         $stmt->bindValue(':date', $date);
+        $stmt->execute();
         echo '<script type="text/javascript">
         alert("succés !");
-        window.location.href = "liste_cours.php";
+        window.location.href = "liste_examen.php";
     </script>';
         exit();
     }
@@ -54,7 +56,7 @@ try {
         <div class="row">
           <div class="col">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" name="nom_cours" id="floatingTextInput1" placeholder="John">
+              <input type="text" class="form-control" name="nomexamen" id="floatingTextInput1" placeholder="John">
               <label for="floatingTextInput1">nom examen</label>
             </div>
           </div>
@@ -62,21 +64,30 @@ try {
           
  
             <div class="form-floating mb-3">
-                    <select class="form-select" name="cours" id="cours"  aria-label="Default select example">
-                    <option selected value= "<?php echo $_GET[id] ;?> ">  ce cours</option>
-                    <?php foreach ($contacts as $contact): ?>
+                                        <?php
+                                        if ( isset($_GET['id'])){$id=$_GET['id'];}
+                                        
+                          
+                            include("fetch-data.php");
+                            ?>
 
-                    <option value="<?php echo $contact['id_cours'];?>"><?php echo $contact['nom_cours'];?></option>
-                    <?php endforeach; ?>
-                    
-                    </select>
+                            <select   class="form-select" name="cours">
+                           <?php if (isset($id))  ?> <option  value=" <?php echo $id;?>" >ce cours</option><? php ?>
+                           <?php
+                            foreach ($options as $option) {
+                            ?>
+                                <option  value="<?php  echo $option['id_cours']?>"><?php echo $option['nom_cours']; ?> </option>
+                                <?php 
+                                }
+                            ?>
+                            </select>
               <label for="floatingTextInput2">description</label>
             </div>
           </div>
         </div>
         <div class="form-floating mb-3">
-          <input type="text-field" class="form-control" value="  <?php echo $_SESSION['id_utilisateur'] ;?>" id="floatingEmailInput" placeholder="name@example.com">
-          <label for="floatingEmailInput">Enseignant</label>
+          <input type="date" class="form-control" name="date" id="floatingEmailInput" placeholder="name@example.com">
+          <label for="floatingEmailInput">datet</label>
         </div>
         
         <button type="submit" name="submit" class="btn btn-primary">Submit</button>

@@ -30,7 +30,7 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Bonjour  </h1>
+            <h1 class="display-2 text-white">Bonjour <?php  echo $_SESSION['username']?> </h1>
 
             <a href="ajouter_cours.php" class="btn btn-info">Ajouter cours</a>
 

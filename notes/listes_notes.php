@@ -18,7 +18,7 @@
 <div class="container-fluid ">
   <div class="row justify-content-center">
 <?php  require '../config.php' ?>
-<table class=" table-sm  w-75 justify-content" style=" overflow:scroll;">
+<table  class=" table-sm mx-auto w-75 justify-content" style="margin-top:75px;overflow:scroll;">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -37,8 +37,8 @@
  <?php
 
  try {
-  
-  $query="SELECT id_note,nom,prenom , matricule,nom_examen ,nom_cours , note FROM notes join examen on notes.examen=examen.id_examen join eleve on notes.eleve =eleve.utilisateur join utilisateur on eleve.utilisateur=utilisateur.id_utilisateur join cours on examen.cours=cours.id_cours";
+  $exam=$_GET['id'];
+  $query="SELECT id_note,nom,prenom , matricule,nom_examen ,nom_cours , note FROM notes join examen on notes.examen=examen.id_examen join eleve on notes.eleve =eleve.utilisateur join utilisateur on eleve.utilisateur=utilisateur.id_utilisateur join cours on examen.cours=cours.id_cours where examen.id_examen=$exam ";
     $result = $db->query($query);
 
      while($row =$result->fetch(PDO::FETCH_ASSOC)){
