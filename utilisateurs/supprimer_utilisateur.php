@@ -1,17 +1,23 @@
-<?php 
-include  '../config.php';
-if(isset($_GET['id']))
-{
-//Get row id
-$uid=$_GET['id'];
-//Qyery for deletion
-$sql = "delete from utilisateur WHERE  id= $uid";
-// Prepare query for execution
-$query = $db->prepare($sql);
-$query -> execute();
-// Mesage after updation
-echo "<script>alert('Record Delete successfully');</script>";
-// Code for redirection
-echo "<script>window.location.href='fetch.php'</script>";
+<?php
+require_once("../config.php");
+
+      if(isset($_GET["id"]))
+      {
+        require_once("connect.inc.php");
+        $id = $_GET["id"];
+        // Connexion a la base de donnees
+        
+try {
+    $n = $db->exec($req);
+    if($n>0) {
+        echo "Suppression effectuee avec succes... :)";
+        header('location:liste_utilisateur.php');
+    }
 }
+catch(PDOException $e)
+{
+    echo "Probleme de requete(suppression)... : ".$e->getMessage();
+}
+      }
+
 ?>

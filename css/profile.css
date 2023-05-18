@@ -375,6 +375,7 @@
     margin-right: -15px;
     margin-left: -15px;
     flex-wrap: wrap;
+    margin-bottom: 25px;
   }
   
   .col-4,
@@ -1021,11 +1022,13 @@
   .card>hr {
     margin-right: 0;
     margin-left: 0;
+    margin-bottom: 25px;
   }
   
   .card-body {
     padding: 1.5rem;
     flex: 1 1 auto;
+
   }
   
   .card-header {

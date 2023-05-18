@@ -26,13 +26,25 @@ require'config.php';
                 $count = $statement->rowCount();  
                 if($count > 0)  
                 {  
-                     $_SESSION["username"] = $_POST["username"];  
-                     $_SESSION["id_utilisateur"] = $result['id_utilisateur']; 
-                     header("location:examen/liste_note.php");  
+                     $_SESSION["username"] = $result['prenom'].' '.$result['nom'] ;  
+                     $_SESSION["id_utilisateur"] = $result['id_utilisateur'];
+                     $_SESSION['role']=$result['role'];
+                     
+                     switch ($result['role']) {
+                         case 'admin':
+                             header('Location: utilisateurs/liste_utilisateur.php');
+                             break;
+                         case 'eleve':
+                             header('Location: notes/listes_notes.php');
+                             break;
+                         case 'enseignant':
+                             header('Location: cours/liste_cours.php');
+                             break;
+                     }
                 }  
                 else  
                 {  
-                     $message = '<label>Wrong Data</label>';  
+                     $message = '<label>verfier vos données</label>';  
                 }  
            }  
       }  

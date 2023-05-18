@@ -1,31 +1,63 @@
 <?php
-require_once'../config.php';
-include ('../passwd.php');
-if (isset($_POST['submit'])){
-try {
+require_once '../config.php';
+include '../passwd.php';
 
- $prenom=$_POST['prenom'];
- $nom=$_POST['nom'];
- $cin=$_POST['cin'];
- $num_tel=$_POST['num_tel'];
- $email=$_POST['mail'];
- $role =$_POST['role'];
- $matricule=$_POST['matricule'];
-  $mdp=generateStrongPassword($length = 9, $add_dashes = false, $available_sets = 'luds');
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "INSERT INTO utilisateur values   (null,'$prenom','$nom','$cin','$num_tel','$role','$mdp')";
-   $db->exec($sql);
-  $last_id = $db->lastInsertId();
-  if($role == "eleve"){$sql2 ="INSERT into  ${role}  values('$last_id','$matricule')";}
-  else 
-  $sql2 ="INSERT into ${role} values('$last_id','$matricule','$email')";
-  $db->exec($sql2) ;
-} catch(PDOException $e) {
-  echo $sql . "<br>" . $e->getMessage();
-}
+if (isset($_POST['submit'])) {
+    try {
+        $prenom = $_POST['prenom'];
+        $nom = $_POST['nom'];
+        $cin = $_POST['cin'];
+        $num_tel = $_POST['num_tel'];
+        $email = $_POST['mail'];
+        $role = $_POST['role'];
+        $matricule = $_POST['matricule'];
+        $mdp = generateStrongPassword($length = 4, $add_dashes = false, $available_sets = 'luds');
+
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $db->prepare("INSERT INTO utilisateur VALUES (null, :prenom, :nom, :cin, :num_tel, :role, :mdp)");
+        $stmt->bindValue(':prenom', $prenom);
+        $stmt->bindValue(':nom', $nom);
+        $stmt->bindValue(':cin', $cin);
+        $stmt->bindValue(':num_tel', $num_tel);
+        $stmt->bindValue(':role', $role);
+        $stmt->bindValue(':mdp', $mdp);
+        $stmt->execute();
+
+        $last_id = $db->lastInsertId();
+
+        if ($role == "eleve") {
+            $stmt2 = $db->prepare("INSERT INTO eleve VALUES (:last_id, :matricule)");
+        } else {
+            $stmt2 = $db->prepare("INSERT INTO ${role} VALUES (:last_id, :matricule, :email)");
+            $stmt2->bindValue(':email', $email);
+
+            //
+            $to = $_POST['mail'];
+$subject = "mdp pour l'app de gestion des notes";
+$message = $mdp;
+$headers = "From: application de gestion note\r\n";
+
+if (mail($to, $subject, $message, $headers)) {
+    echo "L'e-mail a été envoyé avec succès.";
+} else {
+    echo "Une erreur s'est produite lors de l'envoi de l'e-mail.";
 }
 
+            //
+        }
+
+        $stmt2->bindValue(':last_id', $last_id);
+        $stmt2->bindValue(':matricule', $matricule);
+        $stmt2->execute();
+
+        header('location: liste_utilisateur.php');
+    } catch(PDOException $e) {
+        echo $e->getMessage();
+    }
+}
 ?>
+
  <!DOCTYPE html>
 <html lang="en">
 

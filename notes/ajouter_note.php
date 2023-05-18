@@ -71,28 +71,16 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
  //insertion de note 
 if (isset($_POST['submit'])){
-
+   $examen=$_GET['id_examen'];
     foreach ($contacts as $contact):
         $id =$contact['id_utilisateur'];
         $note =$_POST[$id];
-        $query ="INSERT INTO notes  VALUES(NULL,'2','$id','$note')";
+        $query ="INSERT INTO notes  VALUES(NULL,'$examen','$id','$note')";
         $db->exec($query);
         
     endforeach;
 
 }
- 
-  
-
-
-
-
- 
-  
-
-        
-
-    
  
  ?>
  </form>

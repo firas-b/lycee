@@ -10,7 +10,7 @@
 }
 
 body {
-   background-color: #183058;
+    background: linear-gradient(87deg, #183058 0, #1a174d 100%) !important;
     min-height: 100vh;
 }
 
@@ -73,7 +73,7 @@ body::-webkit-scrollbar {
     width: 10px;
     height: 10px;
     display: block;
-    background-color: #183058;
+    background: linear-gradient(87deg, #183058 0, #1a174d 100%) !important;
     position: absolute;
     top: 50%;
     left: 50%;

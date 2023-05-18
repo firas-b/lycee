@@ -1,3 +1,8 @@
+<?php
+session_start();
+if ($_SESSION['role']!= 'admin') { header('Location: ../login.php'); }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,8 +26,7 @@
         <div class="row">
           <div class="col-lg-7 col-md-10">
             <h1 class="display-2 text-white">Hello admin </h1>
-            <p class="text-white mt-0 mb-5">you can add or change the marks of any of your student down below</p>
-            
+
             <a href="ajouter_utilisateur.php" class="btn btn-info">Ajouter utilisateur</a>
           </div>
         </div>
@@ -48,9 +52,9 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    
-                    <th scope="col">nom</th>
                     <th scope="col">prenom</th>
+                    <th scope="col">nom</th>
+                 
                     <th scope="col">cin</th>
                     <th scope="col"> num-tel</th>
                    
@@ -69,8 +73,9 @@
                    while($row =$result->fetch(PDO::FETCH_ASSOC)){
                       echo '<tr>';
                       echo '<th scope="row">'.$row["id_utilisateur"].'</th>';
-                      echo'<td>'.$row['nom'].'</td>';
                       echo'<td>'.$row['prenom'].'</td>';
+                      echo'<td>'.$row['nom'].'</td>';
+                      
                       echo '<td>'.$row['cin'].'</td>';
                       echo'<td>'.$row['num_tel'].'</td>';
                     
@@ -78,7 +83,7 @@
               
                       ?>
                       <td><a class="btn btn-sm btn-primary" href="update_utilisateur.php?id=<?=$row['id_utilisateur']?>&role=<?=$row['role']?>">editer</a>
-                <a href="removeEmployee.php?id=<?= $row['id_utilisateur'] ?>">supprimer</a></td>
+                <a href="supprimer_utilisateur.php?id=<?= $row['id_utilisateur'] ?>">supprimer</a></td>
                       <?php
                    }
                    
@@ -99,14 +104,6 @@
       </div>
     </div>
   </div>
-  <footer class="footer">
-    <div class="row align-items-center justify-content-xl-between">
-      <div class="col-xl-6 m-auto text-center">
-        <div class="copyright">
-          <p>Made with <a href="https://www.creative-tim.com/product/argon-dashboard" target="_blank">Argon Dashboard</a> by Creative Tim</p>
-        </div>
-      </div>
-    </div>
-  </footer>
+ 
 </body>
 </html>
