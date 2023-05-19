@@ -1,8 +1,4 @@
-<?php
-session_start();
-if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
 
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,56 +43,56 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">liste des examens</h3>
+                  <h3 class="mb-0">Mes notes</h3>
                 </div>
                 
               </div>
             </div>
             <div class="card-body" style="background-color:white;">
             <?php  require '../config.php' ?>
-<table class=" table-sm  w-100 justify-content" style=" overflow:scroll;">
+           
+<table  class=" table-sm mx-auto w-75 justify-content" style="overflow:scroll;">
   <thead>
     <tr>
       <th scope="col">#</th>
-     
+      
+      <th scope="col">eleve</th>
+
+      <th scope="col">matricule</th>
       <th scope="col">examen</th>
-      <th scope="col">cours</th>
-      <th scope="col">enseignant</th>
-           
-      <th scope="col"> action</th>
+      <th scope="col"> cours</th>
+      <th scope="col"> note</th>
+      
     </tr>
   </thead>
   <tbody class="table-group-divider">
+  
  <?php
 
- $id = $_SESSION["id_utilisateur"];
  try {
-
-  if (isset($_GET['cours_id'])){
-    $cours=$_GET['cours_id'] ;
-    $sql = "SELECT u.nom,u.prenom, id_examen,nom_cours, nom_examen  from examen join cours on examen.cours=cours.id_cours join enseignant on cours.enseignant = enseignant.utilisateur join utilisateur u on enseignant.utilisateur = u.id_utilisateur where cours.enseignant= $id  and cours.id_cours=$cours";}
-  
-else {$sql = "SELECT u.nom,u.prenom, id_examen,nom_cours, nom_examen  from examen join cours on examen.cours=cours.id_cours join enseignant on cours.enseignant = enseignant.utilisateur join utilisateur u on enseignant.utilisateur = u.id_utilisateur where cours.enseignant= $id; ";}
-    $result = $db->query($sql);
+ 
+  $query = "SELECT id_note,nom,prenom , matricule,nom_examen ,nom_cours , note FROM notes join examen on notes.examen=examen.id_examen join eleve on notes.eleve =eleve.utilisateur join utilisateur on eleve.utilisateur=utilisateur.id_utilisateur join cours on examen.cours=cours.id_cours where eleve.utilisateur = 1;";
+    $result = $db->query($query);
 
      while($row =$result->fetch(PDO::FETCH_ASSOC)){
         echo '<tr>';
-        echo'<td>'.$row['id_examen'].'</td>';
-        echo'<td>'.$row['nom_examen'].'</td>';
-        echo '<td>'.$row['nom_cours'].'</td>';
-      
+   
+        echo '<td>'.$row['id_note'].'</td>';
         echo'<td>'.$row['nom']." ".$row['prenom'].'</td>';
+        echo '<td>'.$row['matricule'].'</td>';
+        echo'<td>'.$row['nom_examen'].'</td>';
+        echo'<td>'.$row['nom_cours'].'</td>';
+        echo'<td>'.$row['note'].'</td>';
+
         ?>
-  <td>
-    <a class="btn btn-sm btn-primary" href="../notes/ajouter_notes.php?id=<?=$row['id_examen']?>">ajouter notes</a>
-    <a class="btn btn-sm btn-secondary" href="../notes/listes_notes.php?id=<?=$row['id_examen']?>">voir notes</a></td>
+       
+     </tr>
         <?php
-        echo'</tr>';
      }
      
 echo'</tbody>
 </table>';
-     
+    
     }
     catch(PDOException $e)
 {

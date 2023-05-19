@@ -83,7 +83,7 @@ if ($_SESSION['role']!= 'admin') { header('Location: ../login.php'); }
               
                       ?>
                       <td><a class="btn btn-sm btn-primary" href="update_utilisateur.php?id=<?=$row['id_utilisateur']?>&role=<?=$row['role']?>">editer</a>
-                <a href="supprimer_utilisateur.php?id=<?= $row['id_utilisateur'] ?>">supprimer</a></td>
+                <a class="btn btn-sm btn-danger" href="supprimer_utilisateur.php?id=<?= $row['id_utilisateur'] ?>">supprimer</a></td>
                       <?php
                    }
                    

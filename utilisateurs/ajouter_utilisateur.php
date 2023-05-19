@@ -51,7 +51,10 @@ if (mail($to, $subject, $message, $headers)) {
         $stmt2->bindValue(':matricule', $matricule);
         $stmt2->execute();
 
-        header('location: liste_utilisateur.php');
+        echo '<script type="text/javascript">
+        alert("succés !");
+        window.location.href = "liste_examen.php";
+    </script>';
     } catch(PDOException $e) {
         echo $e->getMessage();
     }
@@ -70,7 +73,7 @@ if (mail($to, $subject, $message, $headers)) {
     <script src="assets/bootstrap.min.js"></script>
     <meta name="keywords" content="Colorlib Templates">
  <link rel="stylesheet" href="../assets/bootstrap.min.css">
-    <title>Au Register Forms by Colorlib</title>
+    <title> Ajouter utilisateur</title>
 
     <!-- Icons font CSS-->
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -88,7 +91,7 @@ if (mail($to, $subject, $message, $headers)) {
    .
 <div class="wrapper rounded bg-white ">
 
-    <div class="h3">Registration Form</div>
+    <div class="h3">Ajouter utilisateur </div>
 
     <div class="form">
         <form  action="" method="POST">
@@ -136,7 +139,7 @@ if (mail($to, $subject, $message, $headers)) {
     </div>
 
 </div>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body><
 
 </html>
-<!-- end document-->
+
