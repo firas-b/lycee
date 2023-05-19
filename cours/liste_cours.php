@@ -84,7 +84,7 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
         echo'<td>'.$row['nom']." ".$row['prenom'].'</td>';
       
         ?>
-                      <td><a class="btn btn-sm btn-primary" href="../examen/ajouter_examen.php?id=<?=$row['id_cours']?>&role=<?=$row['role']?>">ajouter examen</a>
+                      <td>
                 <a class="btn btn-sm btn-danger"  href="supprimer_cours.php?id=<?= $row['id_cours'] ?>">supprimer</a>
                 <a class="btn btn-sm btn-success"  href="../examen/liste_examen.php?cours_id=<?= $row['id_cours'] ?>">examens</a></td>
                       <?php

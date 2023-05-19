@@ -35,7 +35,7 @@ require'config.php';
                              header('Location: utilisateurs/liste_utilisateur.php');
                              break;
                          case 'eleve':
-                             header('Location: notes/listes_notes.php');
+                             header('Location: notes/notes_eleves.php');
                              break;
                          case 'enseignant':
                              header('Location: cours/liste_cours.php');
@@ -72,7 +72,7 @@ require'config.php';
                      echo '<label class="text-danger">'.$message.'</label>';  
                 }  
                 ?>  
-                <h3 >PHP Login Script using PDO</h3><br />  
+                <h3 >Authentification</h3><br />  
                 <form method="post">  
                      <label>Username</label>  
                      <input type="text" name="username" class="form-control" />  

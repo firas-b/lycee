@@ -1,17 +1,21 @@
+<?php
+session_start();
+if ($_SESSION['role']!= 'eleve') { header('Location: ../login.php'); }
 
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <title></title>
-<script src="../assets/bootstrap.min.js"></script>
+
   <link rel="stylesheet" href="../assets/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <link rel="stylesheet" href="../css/profile.css">
 
 
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  
+
 </head> 
 <body>
   <div class="main-content">
@@ -26,9 +30,10 @@
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Bonjour <?php  echo $_SESSION ['username']?>  </h1>
+            <h2 class="display-2 text-white"> Bonjour  <?php  echo $_SESSION ['username']?>  </h2><br>
+          
 
-            <a href="ajouter_examen.php" class="btn btn-info">Ajouter examen</a>
+         
 
           </div>
         </div>
@@ -39,16 +44,16 @@
       <div class="row justify-content-center">
         
         <div class="col-xl-10 order-xl-1">
-          <div class="card bg-secondary shadow">
-            <div class="card-header bg-white border-0">
+          <div class="card  bg-secondary shadow">
+            <div class="card-header pb-0 bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">Mes notes</h3>
+                  <h2 class="mb-0">Mes notes</h3>
                 </div>
                 
               </div>
             </div>
-            <div class="card-body" style="background-color:white;">
+            <div class="card-body pt-0" style="background-color:white;">
             <?php  require '../config.php' ?>
            
 <table  class=" table-sm mx-auto w-75 justify-content" style="overflow:scroll;">
@@ -70,8 +75,19 @@
  <?php
 
  try {
+    $eleve=$_SESSION['id_utilisateur'];
+
+    $sql = "SELECT (SUM(note) / COUNT(note)) AS moy FROM notes WHERE eleve = :eleve";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':eleve', $eleve);
+    $stmt->execute();
+    
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $moy = $result['moy'];
+    echo "moyenne [temp] : ".$moy;
+    
  
-  $query = "SELECT id_note,nom,prenom , matricule,nom_examen ,nom_cours , note FROM notes join examen on notes.examen=examen.id_examen join eleve on notes.eleve =eleve.utilisateur join utilisateur on eleve.utilisateur=utilisateur.id_utilisateur join cours on examen.cours=cours.id_cours where eleve.utilisateur = 1;";
+  $query = " SELECT id_note,nom,prenom , matricule,nom_examen ,nom_cours , note FROM notes join examen on notes.examen=examen.id_examen join eleve on notes.eleve =eleve.utilisateur join utilisateur on eleve.utilisateur=utilisateur.id_utilisateur join cours on examen.cours=cours.id_cours where eleve.utilisateur =$eleve ;";
     $result = $db->query($query);
 
      while($row =$result->fetch(PDO::FETCH_ASSOC)){

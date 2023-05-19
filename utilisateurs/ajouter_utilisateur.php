@@ -53,7 +53,7 @@ if (mail($to, $subject, $message, $headers)) {
 
         echo '<script type="text/javascript">
         alert("succés !");
-        window.location.href = "liste_examen.php";
+        window.location.href = "liste_utilisateur.php";
     </script>';
     } catch(PDOException $e) {
         echo $e->getMessage();

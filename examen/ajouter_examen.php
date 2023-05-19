@@ -72,7 +72,7 @@ try {
                             ?>
 
                             <select   class="form-select" name="cours">
-                           <?php if (isset($id))  ?> <option  value=" <?php echo $id;?>" >ce cours</option><? php ?>
+                          
                            <?php
                             foreach ($options as $option) {
                             ?>

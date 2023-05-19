@@ -8,7 +8,7 @@ require_once("../config.php");
         // Connexion a la base de donnees
         
 try { 
-  $req="delete from utilisateur where id_utilisateur = $id"
+  $req="delete from utilisateur where id_utilisateur = $id";
     $n = $db->exec($req);
     if($n>0) {
         echo "Suppression effectuee avec succes... :)";

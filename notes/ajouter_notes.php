@@ -31,7 +31,7 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
           <div class="col-lg-7 col-md-10">
             <h1 class="display-2 text-white">Bonjour <?php  echo $_SESSION['username']?>  </h1>
 
-            <a href="ajouter_cours.php" class="btn btn-info">Ajouter cours</a>
+          
 
           </div>
         </div>
@@ -46,7 +46,7 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">liste des examens</h3>
+                  <h3 class="mb-0">Ajout des notes</h3>
                 </div>
                 
               </div>
@@ -113,6 +113,10 @@ if (isset($_POST['submit'])){
         $db->exec($query);
         
     endforeach;
+    echo '<script type="text/javascript">
+    alert("succés de suppression!");
+    window.location.href = "../examen/liste_examen.php?examen_id='.$examen.'";
+</script>';
 
 }
  

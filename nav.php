@@ -14,8 +14,8 @@
         </a>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <?php if ($_SESSION['role']=='enseignant') {echo ' <a class="nav-link" href="../examen/liste_examen.php">Examens</a>';} ?>
-               
+                <?php if ($_SESSION['role']=='enseignant') {echo ' <a class="nav-link" href="../examen/liste_examen.php">Examens</a>';} 
+               elseif($_SESSION['role']== 'eleve'){echo ' <a class="nav-link" href="../notes/notes_eleves.php">mes notes</a>';}?>
             </li>
             <li class="nav-item">
             <?php if ($_SESSION['role']=='enseignant') {echo '   <a class="nav-link" href="../cours/liste_cours.php">Cours</a>';} ?>
