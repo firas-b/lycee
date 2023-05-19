@@ -54,7 +54,7 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <td><?=$contact['prenom']?></td>
         <td><?=$contact['cin']?></td>
         <td><?=$contact['num_tel']?></td>
-        <td><input type ="number" style="width:100px;" name="<?php  echo $contact['id_utilisateur']?>"></td>
+        <td><input type ="number" min="0" max="20" style="width:100px;" name="<?php  echo $contact['id_utilisateur']?>"></td>
        
     </tr>
     <?php endforeach; 

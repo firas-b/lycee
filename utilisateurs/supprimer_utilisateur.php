@@ -3,7 +3,7 @@ require_once("../config.php");
 
       if(isset($_GET["id"]))
       {
-        require_once("connect.inc.php");
+        
         $id = $_GET["id"];
         // Connexion a la base de donnees
         

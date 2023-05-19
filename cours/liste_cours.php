@@ -14,8 +14,6 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
 
 
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </head> 
 <body>
   <div class="main-content">
@@ -61,6 +59,7 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
       <th scope="col">nom du cours</th>
 
       <th scope="col">description </th>
+      <th scope="col">date_ajout </th>
       
       <th scope="col">enseignant</th>
       <th scope="col">actions</th>
@@ -71,7 +70,8 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
  <?php
 
  try {
-    $sql = "SELECT *,utilisateur.prenom , utilisateur.nom from cours join enseignant ON cours.enseignant=enseignant.utilisateur join utilisateur on enseignant.utilisateur=utilisateur.id_utilisateur;";
+  $en=$_SESSION['id_utilisateur'];
+    $sql = "SELECT *,utilisateur.prenom , utilisateur.nom from cours join enseignant ON cours.enseignant=enseignant.utilisateur join utilisateur on enseignant.utilisateur=utilisateur.id_utilisateur where enseignant=$en ;";
     $result = $db->query($sql);
 
      while($row =$result->fetch(PDO::FETCH_ASSOC)){
@@ -79,7 +79,7 @@ if ($_SESSION['role']!= 'enseignant') { header('Location: ../login.php'); }
         echo '<th scope="row">'.$row["id_cours"].'</th>';
         echo '<td>'.$row['nom_cours'].'</td>';
         echo '<td>'.$row['description'].'</td>';
-     
+        echo '<td>'.$row['date_ajout'].'</td>';
      
         echo'<td>'.$row['nom']." ".$row['prenom'].'</td>';
       
